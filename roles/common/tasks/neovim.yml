@@ -1,5 +1,6 @@
 - set_fact:
     neovim_config_dir: "{{ ansible_env.HOME }}/.config/nvim"
+
 - name: add neovim repository
   apt_repository:
     repo: 'ppa:neovim-ppa/unstable'

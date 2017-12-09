@@ -1,0 +1,16 @@
+- name: (pip) install beets and plugin dependencies
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - beets
+    - pyacoustid
+    - discogs-client
+  become: true
+
+- name: (apt) install beets plugin dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - libchromaprint0
+    - libchromaprint-dev
