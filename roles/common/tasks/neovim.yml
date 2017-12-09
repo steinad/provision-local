@@ -1,0 +1,62 @@
+- set_fact:
+    neovim_config_dir: "{{ ansible_env.HOME }}/.config/nvim"
+- name: add neovim repository
+  apt_repository:
+    repo: 'ppa:neovim-ppa/unstable'
+    state: present
+  become: yes
+
+- name: install neovim prerequisites
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - 'python-dev'
+    - 'python3-pip'
+    - 'python-pip'
+    - 'python2.7'
+  become: yes
+
+- name: install neovim
+  apt:
+    name: neovim
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: add neovim to update-alternatives for editor
+  alternatives:
+    name: "{{ item.name }}"
+    link: "{{ item.link }}"
+    path: /usr/bin/nvim
+    priority: nvim
+  with_items:
+    - { name: 'vi', link: '/usr/bin/vi' }
+    - { name: 'vim', link: '/usr/bin/vim' }
+    - { name: 'editor', link: '/usr/bin/editor' }
+  become: yes
+
+- name: install vim-plug
+  block:
+    - file:
+        path: "{{ neovim_config_dir }}/autoload"
+        state: directory
+
+    - get_url:
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: "{{ neovim_config_dir }}/autoload/plug.vim"
+        force: yes
+
+    - name: install | plugins
+      command: "nvim '+silent! +PlugUpdate!' +qall!"
+
+
+- name: plugin prerequisites (pip)
+  pip:
+    name: "{{ item.name }}"
+    executable: "{{ item.pip }}"
+  with_items:
+    - { name: 'neovim', pip: 'pip3' }
+    - { name: 'neovim', pip: 'pip2' }
+    - { name: 'vim-vint', pip: 'pip3' }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install requirements to run playbook
-sudo apt-get install python-pip git software-properties-common
+sudo apt-get install python3-pip python-pip git software-properties-common
 
 # install ansible
 sudo apt-add-repository ppa:ansible/ansible
@@ -20,6 +20,6 @@ sudo pip install -r requirements.txt
 
 echo -e "Edit the config.json file, and [ENTER] when finished" && read
 
-ansible-playbook setup.yml -i 127.0.0.1 --ask-sudo-pass --ask-vault-pass --extra-vars "@config.json"
+ansible-playbook setup.yml -i 127.0.0.1 --ask-become-pass --ask-vault-pass
 
 exit 0

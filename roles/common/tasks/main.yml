@@ -24,6 +24,11 @@
     - libtool
     - pkg-config
     - ppa-purge
+    - python2.7
+    - python3-pip
+    - python-pip
+    - chromium-browser
+    - gnome-tweak-tool
   become: yes
 
 - name: add repositories

@@ -7,40 +7,37 @@
 - debug:
     msg: "{{ zsh_cmd }}"
 
-- name: get zsh repository
-  git:
-    repo: 'git://git.code.sf.net/p/zsh/code'
-    dest: "{{ ansible_env.HOME }}/Applications/zsh"
-    version: 'tags/zsh-{{ zsh_version }}'
-  when: zsh_cmd.rc == 1
+- block:
+  - name: get zsh repository
+    git:
+      repo: 'git://git.code.sf.net/p/zsh/code'
+      dest: "{{ ansible_env.HOME }}/Applications/zsh"
+      version: 'tags/zsh-{{ zsh_version }}'
 
-- name: install yodl for zsh documentation
-  apt:
-    name: 'yodl'
-    state: latest
-  become: yes
-  when: zsh_cmd.rc == 1
+  - name: install yodl for zsh documentation
+    apt:
+      name: 'yodl'
+      state: latest
+    become: yes
 
-- name: zsh preconfig
-  command: "{{ ansible_env.HOME }}/Applications/zsh/Util/preconfig"
-  when: zsh_cmd.rc == 1
+  - name: zsh preconfig
+    command: "{{ ansible_env.HOME }}/Applications/zsh/Util/preconfig"
 
-- name: zsh configure
-  command: "{{ ansible_env.HOME }}/Applications/zsh/configure"
-  when: zsh_cmd.rc == 1
+  - name: zsh configure
+    command: "{{ ansible_env.HOME }}/Applications/zsh/configure"
 
-- name: zsh make
-  make:
-    chdir: "{{ ansible_env.HOME }}/Applications/zsh"
-    params:
-      NUM_THREADS: 4
-  when: zsh_cmd.rc == 1
+  - name: zsh make
+    make:
+      chdir: "{{ ansible_env.HOME }}/Applications/zsh"
+      params:
+        NUM_THREADS: 4
 
-- name: zsh make install
-  make:
-    chdir: "{{ ansible_env.HOME }}/Applications/zsh"
-    target: install
-  become: yes
+  - name: zsh make install
+    make:
+      chdir: "{{ ansible_env.HOME }}/Applications/zsh"
+      target: install
+    become: yes
+
   when: zsh_cmd.rc == 1
 
 - name: find zsh
