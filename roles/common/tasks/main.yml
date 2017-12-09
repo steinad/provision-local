@@ -9,28 +9,6 @@
     path: "{{ ansible_env.HOME }}/.local/bin"
     state: directory
 
-- name: install packages
-  apt:
-    name: "{{ item }}"
-    state: latest
-    update_cache: yes
-  with_items:
-    - curl
-    - stow
-    - ubuntu-restricted-extras
-    - build-essential
-    - autoconf
-    - autoconf-doc
-    - libtool
-    - pkg-config
-    - ppa-purge
-    - python2.7
-    - python3-pip
-    - python-pip
-    - chromium-browser
-    - gnome-tweak-tool
-  become: yes
-
 - name: add repositories
   apt_repository:
     repo: "{{ item }}"
@@ -56,4 +34,53 @@
     # - 'ppa:stebbins/handbrake-releases'
   become: yes
 
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - curl
+    - stow
+    - ubuntu-restricted-extras
+    - build-essential
+    - autoconf
+    - autoconf-doc
+    - libtool
+    - pkg-config
+    - ppa-purge
+    - python2.7
+    - python3-pip
+    - python-pip
+    - chromium-browser
+    - gnome-tweak-tool
+    - numix-icon-theme-circle
+    - numix-gtk-theme
+  become: yes
+
+- name: install gnome3 packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - gnome-shell-extensions
+    - gnome-shell-extension-caffeine
+    - gnome-shell-extension-tilix-dropdown
+    - gnome-shell-extension-top-icons-plus
+  become: yes
+
+- name: enable sudo insults
+  lineinfile:
+    path: /etc/sudoers
+    insertafter: '^Default'
+    line: 'Default insults'
+    state: present
+    validate: '/usr/sbin/visudo -cf %s'
+  become: yes
+
 - import_tasks: zsh.yml
+- import_tasks: neovim.yml
+- import_tasks: wine.yml
+- import_tasks: desktop.yml
+  when: system_type == 'desktop'
+- import_tasks: installs.yml

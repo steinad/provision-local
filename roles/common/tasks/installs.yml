@@ -1,0 +1,63 @@
+- name: install spotify
+  block:
+    - apt_key:
+        keyserver: 'hkp://keyserver.ubuntu.com:80'
+        id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+        state: present
+
+    - apt_repository:
+        repo: 'deb http://repository.spotify.com stable non-free'
+        filename: spotify
+        state: present
+
+    - apt:
+        name: spotify
+        update_cache: yes
+        state: present
+  become: yes
+
+- name: install calibre
+  shell: wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
+  become: yes
+
+- name: installs via url deb
+  apt:
+    deb: "{{ item }}"
+    state: present
+  with_items:
+    # Franz
+    - 'https://github.com/meetfranz/franz/releases/download/v5.0.0-beta.14/franz_5.0.0-beta.14_amd64.deb'
+    # Google Chrome (Stable)
+    - 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+    # Vivaldi
+    - 'https://downloads.vivaldi.com/snapshot/vivaldi-snapshot_1.14.1036.3-1_amd64.deb'
+    # Spideroak One
+    - 'https://spideroak.com/release/spideroak/deb_x64'
+  become: yes
+
+- name: install Signal Desktop
+  block:
+    - apt_key:
+        url: https://updates.signal.org/desktop/apt/keys.asc
+        state: present
+
+    - apt_repository:
+        repo: 'deb [arch=amd64] https://updates.signal.org/desktop/apt artful main'
+        filename: 'signal-artful'
+        state: present
+
+    - apt:
+        name: signal-desktop
+        update_cache: yes
+        state: present
+  become: yes
+
+- name: download Steam deb
+  get_url:
+    url: https://steamcdn-a.akamaihd.net/client/installer/steam.deb
+    dest: "{{ download_dir }}/steam.deb"
+
+- name: download Rambox deb
+  get_url:
+    url: 'https://getrambox.herokuapp.com/download/linux_64?filetype=deb'
+    dest: "{{ download_dir }}/Rambox.deb"

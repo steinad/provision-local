@@ -1,0 +1,21 @@
+- name: add desktop-only repositories
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    # indicator-sound-switcher
+    - 'ppa:/tkyooo/ppa'
+
+    # variety (wallpaper slideshow)
+    - 'ppa:peterlevi/ppa'
+  become: yes
+
+- name: install desktop-only packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    indicator-sound-switcher
+    variety
+  become: yes
