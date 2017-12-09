@@ -1,0 +1,54 @@
+- name: upgrade packages at start
+  apt:
+    update_cache: yes
+    upgrade: full
+  become: yes
+
+- name: create local bin directory
+  file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - curl
+    - stow
+    - ubuntu-restricted-extras
+    - build-essential
+    - autoconf
+    - autoconf-doc
+    - libtool
+    - pkg-config
+    - ppa-purge
+  become: yes
+
+- name: add repositories
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    # latest gnome3
+    - 'ppa:gnome3-team/gnome3-staging'
+
+    # latest libreoffice
+    - 'ppa:libreoffice/ppa'
+
+    # icon and theme collections
+    - 'ppa:noobslab/icons'
+    - 'ppa:noobslab/themes'
+
+    # VLC daily
+    - 'ppa:videolan/master-daily'
+
+    # mpv
+    - 'ppa:mc3man/mpv-tests'
+
+    # handbrake (not updated for artful yet)
+    # - 'ppa:stebbins/handbrake-releases'
+  become: yes
+
+- import_tasks: zsh.yml

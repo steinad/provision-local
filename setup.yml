@@ -1,0 +1,12 @@
+- name: a playbook to set up my local machine
+  hosts: localhost
+  connection: local
+  roles:
+    - common
+  vars:
+    local_bin_dir: "{{ ansible_env.HOME }}/.local/bin"
+    zsh_version: '5.4.2'
+
+  tasks:
+    - debug:
+        msg: "{{ ansible_env }}"
