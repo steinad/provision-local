@@ -1,0 +1,45 @@
+- name: check tmux installed
+  shell: 'command -v tmux || which tmux'
+  register: tmux_cmd
+  ignore_errors: yes
+  check_mode: no
+
+- name: install tmux dependencies
+  apt:
+    name: {{ item }}
+    state: present
+  with_items:
+    - libevent-dev
+    - libncurses5
+    - libncurses5-dev
+
+- block:
+  - name: get tmux repository
+    git:
+      repo: https://github.com/tmux/tmux.git
+      dest: "{{ apps_dir }}/tmux"
+      version: 'tags/{{ tmux_version }}'
+
+  - name: tmux preconfig
+    command: sh autogen.sh
+      args:
+        chdir: "{{ apps_dir }}/tmux"
+
+  - name: tmux configure
+    command: "configure"
+      args:
+        chdir: "{{ apps_dir }}/tmux"
+
+  - name: tmux make
+    make:
+      chdir: "{{ apps_dir }}/tmux"
+      params:
+        NUM_THREADS: 4
+
+  - name: tmux make install
+    make:
+      chdir: "{{ apps_dir }}/tmux"
+      target: install
+    become: yes
+
+  when: tmux_cmd.rc == 1

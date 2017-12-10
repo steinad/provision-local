@@ -11,7 +11,7 @@
   - name: get zsh repository
     git:
       repo: 'git://git.code.sf.net/p/zsh/code'
-      dest: "{{ ansible_env.HOME }}/Applications/zsh"
+      dest: "{{ apps_dir }}/zsh"
       version: 'tags/zsh-{{ zsh_version }}'
 
   - name: install yodl for zsh documentation
@@ -21,20 +21,20 @@
     become: yes
 
   - name: zsh preconfig
-    command: "{{ ansible_env.HOME }}/Applications/zsh/Util/preconfig"
+    command: "{{ apps_dir }}/zsh/Util/preconfig"
 
   - name: zsh configure
-    command: "{{ ansible_env.HOME }}/Applications/zsh/configure"
+    command: "{{ apps_dir }}/zsh/configure"
 
   - name: zsh make
     make:
-      chdir: "{{ ansible_env.HOME }}/Applications/zsh"
+      chdir: "{{ apps_dir }}/zsh"
       params:
         NUM_THREADS: 4
 
   - name: zsh make install
     make:
-      chdir: "{{ ansible_env.HOME }}/Applications/zsh"
+      chdir: "{{ ansible_env.HOME }}/zsh"
       target: install
     become: yes
 

@@ -6,7 +6,9 @@
   vars:
     download_dir: "{{ ansible_env.HOME }}/Downloads"
     local_bin_dir: "{{ ansible_env.HOME }}/.local/bin"
+    apps_dir: "{{ ansible_env.HOME }}/Applications"
     zsh_version: '5.4.2'
+    tmux_version: '2.6'
     system_type: 'laptop'
 
   tasks:

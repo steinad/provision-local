@@ -9,6 +9,11 @@
     path: "{{ ansible_env.HOME }}/.local/bin"
     state: directory
 
+- name: create cloned Applications directory
+  file:
+    path: "{{ apps_dir }}"
+    state: directory
+
 - name: add repositories
   apt_repository:
     repo: "{{ item }}"
@@ -109,6 +114,7 @@
 - import_tasks: desktop.yml
   when: system_type == 'desktop'
 - import_tasks: zsh.yml
+- import_tasks: tmux.yml
 - import_tasks: neovim.yml
 - import_tasks: wine.yml
 - import_tasks: installs.yml
