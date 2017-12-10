@@ -5,14 +5,13 @@
     accept_hostkey: yes
 
 - name: remove/backup files before stow
-  command: "mv {{ ansible_env.HOME }}/{{ item }} {{ ansible_env.HOME }}/{{ item }}.bak"
-  creates: "{{ ansible_env.HOME }}/{{ item }}.bak"
+  command: "mv -f {{ ansible_env.HOME }}/{{ item }} {{ ansible_env.HOME }}/{{ item }}.bak"
   with_items:
     - '.bashrc'
     - '.zshrc'
     - '.profile'
     - '.tmux.conf'
-  ignore_error: yes
+  ignore_errors: yes
 
 - name: stow dotfiles
   block:
