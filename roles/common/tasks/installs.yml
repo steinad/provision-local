@@ -61,3 +61,29 @@
   get_url:
     url: 'https://getrambox.herokuapp.com/download/linux_64?filetype=deb'
     dest: "{{ download_dir }}/Rambox.deb"
+
+- name: install ripgrep (rg)
+  block:
+    - get_url:
+        url: 'https://github.com/BurntSushi/ripgrep/releases/download/0.7.1/ripgrep-0.7.1-x86_64-unknown-linux-musl.tar.gz'
+        dest: "{{ download_dir }}/"
+        register: ripgrep_download
+    - command: tar -xzf {{ ripgrep_download.dest|quote }}
+        args:
+          chdir: "{{ download_dir }}"
+    - copy:
+        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/rg"
+        dest: "{{ local_bin_dir }}/rg"
+    - copy:
+        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/rg.1"
+        dest: "{{ ansible_env.HOME }}/.local/share/man/man1/rg.1"
+    - file:
+        path: "{{ ansible_env.HOME }}/.local/share/man/man1"
+        state: directory
+    - copy:
+        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/_rg"
+        dest: "{{ ansible_env.HOME }}/.common/zsh/_rg"
+    - copy:
+        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/rg.bash_completion"
+        dest: "/etc/bash_completion.d/rg.bash_completion"
+      become: yes

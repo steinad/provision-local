@@ -1,0 +1,14 @@
+- name: check rust installed
+  shell: 'command -v rustc || which rustc'
+  register: rust_cmd
+  ignore_errors: yes
+  check_mode: no
+
+- name: Install rust
+  block:
+    - shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+    - command: rustup install nightly
+    - command: rustup component add rls-preview --toolchain nightly
+    - command: rustup component add rust-analysis --toolchain nightly
+    - command: rustup component add rust-src --toolchain nightly
+  when: rust_cmd.rc == 1

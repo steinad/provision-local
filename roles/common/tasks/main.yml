@@ -62,6 +62,7 @@
     - numix-icon-theme-circle
     - numix-gtk-theme
     - unzip
+    - ffmpeg
   become: yes
 
 - name: install gnome3 packages
