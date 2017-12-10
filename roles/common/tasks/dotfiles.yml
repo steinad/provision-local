@@ -1,0 +1,27 @@
+- name: clone dotfiles repository
+  git:
+    repo: git@gitlab.com:ads248/dotfiles.git
+    dest: "{{ ansible_env.HOME }}/dotfiles"
+    accept_hostkey: yes
+
+- name: remove/backup files before stow
+  command: "mv {{ ansible_env.HOME }}/{{ item }} {{ ansible_env.HOME }}/{{ item }}.bak"
+  creates: "{{ ansible_env.HOME }}/{{ item }}.bak"
+  with_items:
+    - '.bashrc'
+    - '.zshrc'
+    - '.profile'
+    - '.tmux.conf'
+  ignore_error: yes
+
+- name: stow dotfiles
+  block:
+    - command: stow --no-folding {{ item|quote }}
+      args:
+        chdir: "{{ ansible_env.HOME }}/dotfiles"
+      with_items:
+        - common
+        - shell
+        - vim
+        - scripts
+        - beets

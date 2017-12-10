@@ -56,6 +56,7 @@
     - gnome-tweak-tool
     - numix-icon-theme-circle
     - numix-gtk-theme
+    - unzip
   become: yes
 
 - name: install gnome3 packages
@@ -78,9 +79,36 @@
     validate: '/usr/sbin/visudo -cf %s'
   become: yes
 
+- name: install private keys
+  block:
+    - file:
+        path: "{{ ansible_env.HOME }}/.ssh"
+        state: directory
+    - copy:
+        src: "{{ role_dir }}/files/id_rsa"
+        dest: "{{ ansible_env.HOME }}/.ssh/id_rsa"
+        mode: 0600
+        owner: user
+    - copy:
+        src: "{{ role_dir }}/files/id_rsa.pub"
+        dest: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
+        mode: 0600
+        owner: user
+
+- name: install patched Hack font
+  block:
+    - get_url: https://github.com/ryanoasis/nerd-fonts/releases/download/v1.2.0/Hack.zip
+      dest: "{{ download_dir }}/Hack.zip"
+    - file:
+        path: "{{ ansible_env.HOME }}/.fonts"
+        state: directory
+    - command: "unzip -d {{ ansible_env.HOME }}/.fonts {{ download_dir }}/Hack.zip"
+    - command: fc-cache -f -v
+
+- import_tasks: desktop.yml
+  when: system_type == 'desktop'
 - import_tasks: zsh.yml
 - import_tasks: neovim.yml
 - import_tasks: wine.yml
-- import_tasks: desktop.yml
-  when: system_type == 'desktop'
 - import_tasks: installs.yml
+- import_tasks: dotfiles.yml
