@@ -31,7 +31,7 @@
     name: "{{ item.name }}"
     link: "{{ item.link }}"
     path: /usr/bin/nvim
-    priority: nvim
+    priority: 60
   with_items:
     - { name: 'vi', link: '/usr/bin/vi' }
     - { name: 'vim', link: '/usr/bin/vim' }

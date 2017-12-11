@@ -2,20 +2,24 @@
   apt_key:
     url: https://repos.wine-staging.com/wine/Release.key
     state: present
+  become: yes
 
 - name: add wine repository
   apt_repository:
-    repo: 'https://dl.winehq.org/wine-builds/ubuntu/'
+    repo: 'deb https://dl.winehq.org/wine-builds/ubuntu/ artful main'
     state: present
+  become: yes
 
 - name: install wine
   apt:
     name: 'winehq-staging'
+    install_recommends: yes
     state: latest
     update_cache: yes
+  become: yes
 
 - name: download winetricks
   get_url:
     url: 'https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks'
-    dest: "{{ ansible_env.HOME }}/.local/bin/winetricks"
+    dest: "{{ local_bin_dir }}/winetricks"
     mode: 0755

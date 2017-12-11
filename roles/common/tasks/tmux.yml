@@ -6,7 +6,7 @@
 
 - name: install tmux dependencies
   apt:
-    name: {{ item }}
+    name: "{{ item }}"
     state: present
   with_items:
     - libevent-dev
@@ -22,13 +22,13 @@
 
   - name: tmux preconfig
     command: sh autogen.sh
-      args:
-        chdir: "{{ apps_dir }}/tmux"
+    args:
+      chdir: "{{ apps_dir }}/tmux"
 
   - name: tmux configure
     command: "configure"
-      args:
-        chdir: "{{ apps_dir }}/tmux"
+    args:
+      chdir: "{{ apps_dir }}/tmux"
 
   - name: tmux make
     make:

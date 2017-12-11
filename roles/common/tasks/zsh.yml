@@ -4,9 +4,6 @@
   ignore_errors: yes
   check_mode: no
 
-- debug:
-    msg: "{{ zsh_cmd }}"
-
 - block:
   - name: get zsh repository
     git:
@@ -44,9 +41,6 @@
   shell: 'command -v zsh || which zsh'
   register: zsh_cmd
   check_mode: no
-
-- debug:
-    msg: "{{ zsh_cmd }}"
 
 - name: add zsh to /etc/shells
   lineinfile:

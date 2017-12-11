@@ -72,9 +72,9 @@
     update_cache: yes
   with_items:
     - gnome-shell-extensions
-    - gnome-shell-extension-caffeine
-    - gnome-shell-extension-tilix-dropdown
-    - gnome-shell-extension-top-icons-plus
+    # - gnome-shell-extension-caffeine
+    # - gnome-shell-extension-tilix-dropdown
+    # - gnome-shell-extension-top-icons-plus
   become: yes
 
 - name: enable sudo insults
@@ -92,15 +92,15 @@
         path: "{{ ansible_env.HOME }}/.ssh"
         state: directory
     - copy:
-        src: "{{ role_dir }}/files/id_rsa"
+        src: "{{ role_path }}/files/id_rsa"
         dest: "{{ ansible_env.HOME }}/.ssh/id_rsa"
         mode: 0600
-        owner: user
+        owner: "{{ ansible_env.USER }}"
     - copy:
-        src: "{{ role_dir }}/files/id_rsa.pub"
+        src: "{{ role_path }}/files/id_rsa.pub"
         dest: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
         mode: 0600
-        owner: user
+        owner: "{{ ansible_env.USER }}"
 
 - name: install patched Hack font
   block:
@@ -121,6 +121,8 @@
 - import_tasks: neovim.yml
 - import_tasks: wine.yml
 - import_tasks: installs.yml
+  tags: installs
 - import_tasks: dotfiles.yml
+  tags: dotfiles
 - import_tasks: beets.yml
 - import_tasks: rust.yml

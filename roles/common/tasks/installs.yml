@@ -11,7 +11,7 @@
         state: present
 
     - apt:
-        name: spotify
+        name: spotify-client
         update_cache: yes
         state: present
   become: yes
@@ -33,8 +33,7 @@
     - 'https://downloads.vivaldi.com/snapshot/vivaldi-snapshot_1.14.1036.3-1_amd64.deb'
     # Spideroak One
     - 'https://spideroak.com/release/spideroak/deb_x64'
-    # Google Play Music manager
-    - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb'
+    # Google Play Music manager - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb'
   become: yes
 
 - name: install Signal Desktop
@@ -69,27 +68,25 @@
     - get_url:
         url: 'https://github.com/BurntSushi/ripgrep/releases/download/0.7.1/ripgrep-0.7.1-x86_64-unknown-linux-musl.tar.gz'
         dest: "{{ download_dir }}/"
-        register: ripgrep_download
+      register: ripgrep_download
+    - set_fact:
+        rg_dir: "{{ download_dir }}/{{ (((ripgrep_download.dest|basename|splitext)[0])|splitext)[0] }}"
     - command: tar -xzf {{ ripgrep_download.dest|quote }}
-        args:
-          chdir: "{{ download_dir }}"
+      args:
+        chdir: "{{ download_dir }}"
     - copy:
-        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/rg"
+        src: "{{ rg_dir }}/rg"
         dest: "{{ local_bin_dir }}/rg"
     - copy:
-        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/rg.1"
+        src: "{{ rg_dir }}/rg.1"
         dest: "{{ ansible_env.HOME }}/.local/share/man/man1/rg.1"
     - file:
         path: "{{ ansible_env.HOME }}/.local/share/man/man1"
         state: directory
     - copy:
-        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/_rg"
+        src: "{{ rg_dir }}/complete/_rg"
         dest: "{{ ansible_env.HOME }}/.common/zsh/_rg"
     - copy:
-        src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/rg.bash_completion"
-        dest: "/etc/bash_completion.d/rg.bash_completion"
+        src: "{{ rg_dir }}/complete/rg.bash-completion"
+        dest: "/etc/bash_completion.d/rg.bash-completion"
       become: yes
-
-- name: install google music manager
-  get_url:
-    dest: ""

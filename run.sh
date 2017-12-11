@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install requirements to run playbook
-sudo apt-get install python3-pip python-pip git software-properties-common
+sudo apt-get install aptitude python3-pip python-pip git software-properties-common
 
 # install ansible
 sudo apt-add-repository ppa:ansible/ansible
@@ -17,6 +17,7 @@ cd provision-local
 
 # install python requirements for playbook
 sudo pip install -r requirements.txt
+sudo pip2 install -r requirements.txt
 
 echo -e "Edit the config.json file, and [ENTER] when finished" && read
 

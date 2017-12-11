@@ -1,8 +1,10 @@
 - name: clone dotfiles repository
   git:
-    repo: git@gitlab.com:ads248/dotfiles.git
+    repo: ssh://git@gitlab.com:ads248/dotfiles.git
     dest: "{{ ansible_env.HOME }}/dotfiles"
+    key_file: "{{ ansible_env.HOME }}/.ssh/id_rsa"
     accept_hostkey: yes
+
 
 - name: remove/backup files before stow
   command: "mv -f {{ ansible_env.HOME }}/{{ item }} {{ ansible_env.HOME }}/{{ item }}.bak"

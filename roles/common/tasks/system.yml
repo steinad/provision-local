@@ -1,25 +1,25 @@
 - name: Auto-mount extra drives
   block:
     - mount:
-      path: /media/Media
-      src: LABEL=Storage
-      fstype: ntfs-3g
-      opts: default
-      state: mounted
+        path: /media/Media
+        src: LABEL=Storage
+        fstype: ntfs-3g
+        opts: default
+        state: mounted
 
     - mount:
-      path: /media/StorageOS
-      src: LABEL=StorageOS
-      fstype: ntfs-3g
-      opts: default
-      state: mounted
+        path: /media/StorageOS
+        src: LABEL=StorageOS
+        fstype: ntfs-3g
+        opts: default
+        state: mounted
 
     - mount:
-      path: /media/Videos
-      src: LABEL=Data04
-      fstype: ntfs-3g
-      opts: default
-      state: mounted
+        path: /media/Videos
+        src: LABEL=Data04
+        fstype: ntfs-3g
+        opts: default
+        state: mounted
   become: yes
 
 - name: Symlink home dirs
