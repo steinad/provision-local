@@ -1,0 +1,41 @@
+- name: Auto-mount extra drives
+  block:
+    - mount:
+      path: /media/Media
+      src: LABEL=Storage
+      fstype: ntfs-3g
+      opts: default
+      state: mounted
+
+    - mount:
+      path: /media/StorageOS
+      src: LABEL=StorageOS
+      fstype: ntfs-3g
+      opts: default
+      state: mounted
+
+    - mount:
+      path: /media/Videos
+      src: LABEL=Data04
+      fstype: ntfs-3g
+      opts: default
+      state: mounted
+  become: yes
+
+- name: Symlink home dirs
+  block:
+    - command: rm -r {{ ansible_env.HOME }}/Documents
+    - command: rm -r {{ ansible_env.HOME }}/Pictures
+    - command: rm -r {{ ansible_env.HOME }}/Videos
+    - command: rm -r {{ ansible_env.HOME }}/Music
+    - file:
+        path: "{{ ansible_env.HOME }}/{{ item.name }}"
+        src: "{{ item.src }}"
+        state: link
+      with_items:
+        - { name: Documents, src: "/media/StorageOS/Documents" }
+        - { name: CalibreLibrary, src: "/media/StorageOS/Books/CalibreLibrary" }
+        - { name: Development, src: "/media/StorageOS/Development" }
+        - { name: Pictures, src: "/media/Media/Pictures" }
+        - { name: Music, src: "/media/Media/Music" }
+        - { name: Videos, src: "/media/Videos/Videos" }

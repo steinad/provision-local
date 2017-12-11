@@ -33,6 +33,8 @@
     - 'https://downloads.vivaldi.com/snapshot/vivaldi-snapshot_1.14.1036.3-1_amd64.deb'
     # Spideroak One
     - 'https://spideroak.com/release/spideroak/deb_x64'
+    # Google Play Music manager
+    - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb'
   become: yes
 
 - name: install Signal Desktop
@@ -87,3 +89,7 @@
         src: "{{ download_dir }}/{{ (ripgrep_download.dest|basename|splitext)[0] }}/rg.bash_completion"
         dest: "/etc/bash_completion.d/rg.bash_completion"
       become: yes
+
+- name: install google music manager
+  get_url:
+    dest: ""
