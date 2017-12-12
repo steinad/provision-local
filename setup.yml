@@ -9,7 +9,7 @@
     apps_dir: "{{ ansible_env.HOME }}/Applications"
     zsh_version: '5.4.2'
     tmux_version: '2.6'
-    system_type: 'laptop'
+    system_type: 'desktop'
 
   tasks:
     - debug:

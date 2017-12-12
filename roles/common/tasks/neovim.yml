@@ -38,6 +38,16 @@
     - { name: 'editor', link: '/usr/bin/editor' }
   become: yes
 
+- name: plugin prerequisites (pip)
+  pip:
+    name: "{{ item.name }}"
+    executable: "{{ item.pip }}"
+  with_items:
+    - { name: 'neovim', pip: 'pip3' }
+    - { name: 'neovim', pip: 'pip2' }
+    - { name: 'vim-vint', pip: 'pip3' }
+  become: yes
+
 - name: install vim-plug
   block:
     - file:
@@ -53,11 +63,3 @@
       command: "nvim '+silent! +PlugUpdate!' +qall!"
 
 
-- name: plugin prerequisites (pip)
-  pip:
-    name: "{{ item.name }}"
-    executable: "{{ item.pip }}"
-  with_items:
-    - { name: 'neovim', pip: 'pip3' }
-    - { name: 'neovim', pip: 'pip2' }
-    - { name: 'vim-vint', pip: 'pip3' }

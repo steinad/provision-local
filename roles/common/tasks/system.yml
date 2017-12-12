@@ -24,10 +24,14 @@
 
 - name: Symlink home dirs
   block:
-    - command: rm -r {{ ansible_env.HOME }}/Documents
-    - command: rm -r {{ ansible_env.HOME }}/Pictures
-    - command: rm -r {{ ansible_env.HOME }}/Videos
-    - command: rm -r {{ ansible_env.HOME }}/Music
+    - file:
+        path: "{{ ansible_env.HOME }}/{{ item }}"
+        state: absent
+      with_items:
+        - Documents
+        - Pictures
+        - Videos
+        - Music
     - file:
         path: "{{ ansible_env.HOME }}/{{ item.name }}"
         src: "{{ item.src }}"
@@ -36,6 +40,6 @@
         - { name: Documents, src: "/media/StorageOS/Documents" }
         - { name: CalibreLibrary, src: "/media/StorageOS/Books/CalibreLibrary" }
         - { name: Development, src: "/media/StorageOS/Development" }
-        - { name: Pictures, src: "/media/Media/Pictures" }
-        - { name: Music, src: "/media/Media/Music" }
+        - { name: Pictures, src: "/media/Media/Aidan/Pictures" }
+        - { name: Music, src: "/media/Media/Aidan/Music" }
         - { name: Videos, src: "/media/Videos/Videos" }

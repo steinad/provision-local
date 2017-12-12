@@ -1,6 +1,6 @@
 - name: clone dotfiles repository
   git:
-    repo: ssh://git@gitlab.com:ads248/dotfiles.git
+    repo: git@gitlab.com:ads248/dotfiles.git
     dest: "{{ ansible_env.HOME }}/dotfiles"
     key_file: "{{ ansible_env.HOME }}/.ssh/id_rsa"
     accept_hostkey: yes

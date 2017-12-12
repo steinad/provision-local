@@ -12,5 +12,6 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - libchromaprint0
+    - libchromaprint1
     - libchromaprint-dev
+  become: yes

@@ -6,9 +6,15 @@
 
 - name: Install rust
   block:
-    - shell: curl https://sh.rustup.rs -sSf | sh -s -- -y
+    - get_url:
+        url: https://sh.rustup.rs
+        dest: "{{ download_dir }}/rustup.sh"
+        mode: 0755
+    - command: "{{ download_dir }}/rustup.sh -y"
     - command: rustup install nightly
     - command: rustup component add rls-preview --toolchain nightly
     - command: rustup component add rust-analysis --toolchain nightly
     - command: rustup component add rust-src --toolchain nightly
+  environment:
+    PATH: $PATH:{{ ansible_env.HOME }}/.cargo/bin
   when: rust_cmd.rc == 1

@@ -64,6 +64,7 @@
     - unzip
     - ffmpeg
     - ntfs-3g
+    - libncurses5-dev
   become: yes
 
 - name: install gnome3 packages
@@ -80,8 +81,8 @@
 - name: enable sudo insults
   lineinfile:
     path: /etc/sudoers
-    insertafter: '^Default'
-    line: 'Default insults'
+    insertafter: '^Defaults'
+    line: 'Defaults insults'
     state: present
     validate: '/usr/sbin/visudo -cf %s'
   become: yes
@@ -110,7 +111,7 @@
     - file:
         path: "{{ ansible_env.HOME }}/.fonts"
         state: directory
-    - command: "unzip -d {{ ansible_env.HOME }}/.fonts {{ download_dir }}/Hack.zip"
+    - command: "unzip -u {{ download_dir }}/Hack.zip -d {{ ansible_env.HOME }}/.fonts"
     - command: fc-cache -f -v
 
 - import_tasks: system.yml
@@ -118,6 +119,7 @@
   when: system_type == 'desktop'
 - import_tasks: zsh.yml
 - import_tasks: tmux.yml
+  tags: tmux
 - import_tasks: neovim.yml
 - import_tasks: wine.yml
 - import_tasks: installs.yml
@@ -126,3 +128,4 @@
   tags: dotfiles
 - import_tasks: beets.yml
 - import_tasks: rust.yml
+  tags: rust

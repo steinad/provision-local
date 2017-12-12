@@ -12,6 +12,7 @@
     - libevent-dev
     - libncurses5
     - libncurses5-dev
+  become: yes
 
 - block:
   - name: get tmux repository
@@ -26,9 +27,13 @@
       chdir: "{{ apps_dir }}/tmux"
 
   - name: tmux configure
-    command: "configure"
+    shell: "./configure"
     args:
       chdir: "{{ apps_dir }}/tmux"
+    register: tmux_conf
+
+  - debug:
+      msg: "{{ tmux_conf }}"
 
   - name: tmux make
     make:

@@ -18,10 +18,18 @@
     become: yes
 
   - name: zsh preconfig
-    command: "{{ apps_dir }}/zsh/Util/preconfig"
+    command: "Util/preconfig"
+    args:
+      chdir: "{{ apps_dir }}/zsh"
+    register: zsh_preconf
+  
+  - debug:
+      msg: "{{ zsh_preconf }}"
 
   - name: zsh configure
-    command: "{{ apps_dir }}/zsh/configure"
+    command: "configure"
+    args:
+      chdir: "{{ apps_dir }}/zsh"
 
   - name: zsh make
     make:
@@ -57,3 +65,4 @@
 - name: install oh-my-zsh
   shell: 'sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"'
   when: zsh_cmd.rc == 0
+  ignore_errors: true

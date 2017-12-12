@@ -35,6 +35,7 @@
     - 'https://spideroak.com/release/spideroak/deb_x64'
     # Google Play Music manager - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb'
   become: yes
+  ignore_errors: yes
 
 - name: install Signal Desktop
   block:
@@ -77,11 +78,14 @@
     - copy:
         src: "{{ rg_dir }}/rg"
         dest: "{{ local_bin_dir }}/rg"
+    - file:
+        path: "{{ ansible_env.HOME }}/.local/share/man/man1"
+        state: directory
     - copy:
         src: "{{ rg_dir }}/rg.1"
         dest: "{{ ansible_env.HOME }}/.local/share/man/man1/rg.1"
     - file:
-        path: "{{ ansible_env.HOME }}/.local/share/man/man1"
+        path: "{{ ansible_env.HOME }}/.common/zsh"
         state: directory
     - copy:
         src: "{{ rg_dir }}/complete/_rg"
