@@ -10,11 +10,13 @@
         url: https://sh.rustup.rs
         dest: "{{ download_dir }}/rustup.sh"
         mode: 0755
-    - command: "{{ download_dir }}/rustup.sh -y"
+    - command: sh rustup.sh -y
+      args:
+        chdir: "{{ download_dir }}"
     - command: rustup install nightly
     - command: rustup component add rls-preview --toolchain nightly
     - command: rustup component add rust-analysis --toolchain nightly
     - command: rustup component add rust-src --toolchain nightly
   environment:
-    PATH: $PATH:{{ ansible_env.HOME }}/.cargo/bin
+    PATH: "{{ ansible_env.PATH }}:{{ ansible_env.HOME }}/.cargo/bin"
   when: rust_cmd.rc == 1

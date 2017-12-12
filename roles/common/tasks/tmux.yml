@@ -30,10 +30,6 @@
     shell: "./configure"
     args:
       chdir: "{{ apps_dir }}/tmux"
-    register: tmux_conf
-
-  - debug:
-      msg: "{{ tmux_conf }}"
 
   - name: tmux make
     make:

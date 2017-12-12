@@ -8,6 +8,9 @@
 
     # variety (wallpaper slideshow)
     - 'ppa:peterlevi/ppa'
+
+    # graphics drivers
+    - 'ppa:graphics-drivers/ppa'
   become: yes
 
 - name: install desktop-only packages

@@ -27,7 +27,7 @@
       msg: "{{ zsh_preconf }}"
 
   - name: zsh configure
-    command: "configure"
+    command: "sh configure"
     args:
       chdir: "{{ apps_dir }}/zsh"
 
@@ -39,7 +39,7 @@
 
   - name: zsh make install
     make:
-      chdir: "{{ ansible_env.HOME }}/zsh"
+      chdir: "{{ apps_dir }}/zsh"
       target: install
     become: yes
 

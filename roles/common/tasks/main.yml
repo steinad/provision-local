@@ -65,17 +65,7 @@
     - ffmpeg
     - ntfs-3g
     - libncurses5-dev
-  become: yes
-
-- name: install gnome3 packages
-  apt:
-    name: "{{ item }}"
-    update_cache: yes
-  with_items:
-    - gnome-shell-extensions
-    # - gnome-shell-extension-caffeine
-    # - gnome-shell-extension-tilix-dropdown
-    # - gnome-shell-extension-top-icons-plus
+    - chrome-gnome-shell
   become: yes
 
 - name: enable sudo insults
@@ -117,7 +107,9 @@
 - import_tasks: system.yml
 - import_tasks: desktop.yml
   when: system_type == 'desktop'
+  tags: desktop
 - import_tasks: zsh.yml
+  tags: zsh
 - import_tasks: tmux.yml
   tags: tmux
 - import_tasks: neovim.yml
