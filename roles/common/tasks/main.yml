@@ -39,7 +39,7 @@
     # - 'ppa:stebbins/handbrake-releases'
   become: yes
 
-- name: install packages
+- name: install dev/prereq packages
   apt:
     name: "{{ item }}"
     state: latest
@@ -47,26 +47,61 @@
   with_items:
     - curl
     - stow
-    - ubuntu-restricted-extras
-    - build-essential
     - autoconf
     - autoconf-doc
+    - build-essential
     - libtool
     - pkg-config
-    - ppa-purge
+    - ntfs-3g
+    - libncurses5-dev
+    - libssl-dev
+    - libcurl4-openssl-dev
+    - unzip
+  become: yes
+
+- name: install programming language(s) / compilers
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - openjdk-9-jdk-headless
     - python2.7
-    - python3-pip
     - python-pip
+    - python3-pip
+  become: yes
+
+- name: install packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - ubuntu-restricted-extras
+    - ppa-purge
     - chromium-browser
     - gnome-tweak-tool
     - numix-icon-theme-circle
     - numix-gtk-theme
-    - unzip
+    - indicator-multiload
     - ffmpeg
-    - ntfs-3g
-    - libncurses5-dev
     - chrome-gnome-shell
+    - gnome-todo
+    - gnome-calendar
+    - gnome-mpv
+    - gnome-music
   become: yes
+
+- name: install python packages
+  pip:
+    name: "{{ item }}"
+    executable: pip3
+  with_items:
+    # required for tasd.py
+    - bs4
+    - pycurl
+    - mutagen
+    - lxml
 
 - name: enable sudo insults
   lineinfile:

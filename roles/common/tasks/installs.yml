@@ -25,8 +25,8 @@
     deb: "{{ item }}"
     state: present
   with_items:
-    # Franz
-    - 'https://github.com/meetfranz/franz/releases/download/v5.0.0-beta.14/franz_5.0.0-beta.14_amd64.deb'
+    # Rambox
+    - 'https://github.com/saenzramiro/rambox/releases/download/0.5.13/Rambox_0.5.13-x64.deb'
     # Google Chrome (Stable)
     - 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
     # Vivaldi
@@ -58,11 +58,6 @@
   get_url:
     url: https://steamcdn-a.akamaihd.net/client/installer/steam.deb
     dest: "{{ download_dir }}/steam.deb"
-
-- name: download Rambox deb
-  get_url:
-    url: 'https://getrambox.herokuapp.com/download/linux_64?filetype=deb'
-    dest: "{{ download_dir }}/Rambox.deb"
 
 - name: install ripgrep (rg)
   block:

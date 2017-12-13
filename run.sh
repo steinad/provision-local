@@ -3,9 +3,13 @@
 # install requirements to run playbook
 sudo apt-get install aptitude python-pip python3-pip git software-properties-common;
 
-# install ansible
-sudo apt-add-repository ppa:ansible/ansible;
-sudo apt-get update;
+# Install ansible
+# add ansible repo, only if it has not already been added
+ansible_repos=( /etc/apt/sources.list.d/ansible-ubuntu-ansible-*.list )
+if [[ ! ${#ansible_repos[@]} ]]; then
+	sudo apt-add-repository ppa:ansible/ansible;
+	sudo apt-get update;
+fi
 sudo apt-get install ansible;
 
 # get full playbook repository
