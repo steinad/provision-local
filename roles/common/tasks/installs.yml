@@ -16,6 +16,23 @@
         state: present
   become: yes
 
+- name: install lutris
+  block:
+    - apt_key:
+        url: "http://download.opensuse.org/repositories/home:/strycore/xUbuntu_{{ ubuntu_version }}/Release.key"
+        state: present
+
+    - apt_repository:
+        repo: 'deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_{{ ubuntu_version }}/ ./'
+        filename: lutris
+        state: present
+
+    - apt:
+        name: lutris
+        update_cache: yes
+        state: present
+  become: yes
+
 - name: install calibre
   shell: wget -nv -O- https://download.calibre-ebook.com/linux-installer.py | sudo python -c "import sys; main=lambda:sys.stderr.write('Download failed\n'); exec(sys.stdin.read()); main()"
   become: yes

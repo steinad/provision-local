@@ -35,6 +35,9 @@
     # mpv
     - 'ppa:mc3man/mpv-tests'
 
+    # guayadeque
+    - 'ppa:anonbeat/guayadeque'
+
     # handbrake (not updated for artful yet)
     # - 'ppa:stebbins/handbrake-releases'
   become: yes
@@ -52,6 +55,7 @@
     - build-essential
     - libtool
     - pkg-config
+    - cmake
     - ntfs-3g
     - libncurses5-dev
     - libssl-dev
@@ -89,7 +93,7 @@
     - gnome-todo
     - gnome-calendar
     - gnome-mpv
-    - gnome-music
+    - guayadeque
   become: yes
 
 - name: install python packages
