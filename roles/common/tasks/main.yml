@@ -94,6 +94,7 @@
     - gnome-calendar
     - gnome-mpv
     - guayadeque
+    - mkvtoolnix
   become: yes
 
 - name: install python packages
