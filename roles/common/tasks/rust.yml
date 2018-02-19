@@ -8,9 +8,9 @@
   block:
     - get_url:
         url: https://sh.rustup.rs
-        dest: "{{ download_dir }}/rustup.sh"
+        dest: "{{ download_dir }}/rustup.rs"
         mode: 0755
-    - command: sh rustup.sh -y
+    - command: sh rustup.rs -y
       args:
         chdir: "{{ download_dir }}"
     - command: rustup install nightly
