@@ -9,7 +9,7 @@
     git:
       repo: 'git://git.code.sf.net/p/zsh/code'
       dest: "{{ apps_dir }}/zsh"
-      version: 'tags/zsh-{{ zsh_version }}'
+      version: 'tags/zsh-{{ versions.zsh }}'
 
   - name: install yodl for zsh documentation
     apt:

@@ -19,7 +19,7 @@
     git:
       repo: https://github.com/tmux/tmux.git
       dest: "{{ apps_dir }}/tmux"
-      version: 'tags/{{ tmux_version }}'
+      version: 'tags/{{ versions.tmux }}'
 
   - name: tmux preconfig
     command: sh autogen.sh

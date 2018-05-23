@@ -7,10 +7,13 @@
     download_dir: "{{ ansible_env.HOME }}/Downloads"
     local_bin_dir: "{{ ansible_env.HOME }}/.local/bin"
     apps_dir: "{{ ansible_env.HOME }}/Applications"
-    zsh_version: '5.4.2'
-    tmux_version: '2.6'
     system_type: 'desktop'
-    ubuntu_version: '17.10'
+    ubuntu_version: '18.04'
+    versions:
+      zsh: '5.4.2'
+      tmux: '2.6'
+      vivaldi: 'snapshot_1.16.1177.5'
+      ripgrep: '0.8.1'
 
   tasks:
     - debug:
