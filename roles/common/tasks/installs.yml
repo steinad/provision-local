@@ -90,6 +90,7 @@
     - copy:
         src: "{{ rg_dir }}/rg"
         dest: "{{ local_bin_dir }}/rg"
+        mode: a+x
     - file:
         path: "{{ ansible_env.HOME }}/.local/share/man/man1"
         state: directory

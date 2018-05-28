@@ -162,3 +162,5 @@
 - import_tasks: beets.yml
 - import_tasks: rust.yml
   tags: rust
+- import_tasks: ffmpeg.yml
+  tags: ffmpeg
