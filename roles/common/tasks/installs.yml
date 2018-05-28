@@ -42,12 +42,12 @@
     deb: "{{ item }}"
     state: present
   with_items:
-    # Rambox
-    - 'https://github.com/saenzramiro/rambox/releases/download/0.5.13/Rambox_0.5.13-x64.deb'
+    # RipGrep (deb)
+    - 'https://github.com/BurntSushi/ripgrep/releases/download/{{ versions.ripgrep }}/ripgrep_{{ versions.ripgrep }}_amd64.deb'
     # Google Chrome (Stable)
     - 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
     # Vivaldi
-    - 'https://downloads.vivaldi.com/snapshot/vivaldi-snapshot_1.14.1036.3-1_amd64.deb'
+    - 'https://downloads.vivaldi.com/snapshot/vivaldi-{{ versions.vivaldi }}-1_amd64.deb'
     # Spideroak One
     - 'https://spideroak.com/release/spideroak/deb_x64'
     # Google Play Music manager - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb'
@@ -75,35 +75,3 @@
   get_url:
     url: https://steamcdn-a.akamaihd.net/client/installer/steam.deb
     dest: "{{ download_dir }}/steam.deb"
-
-- name: install ripgrep (rg)
-  block:
-    - get_url:
-        url: 'https://github.com/BurntSushi/ripgrep/releases/download/0.7.1/ripgrep-0.7.1-x86_64-unknown-linux-musl.tar.gz'
-        dest: "{{ download_dir }}/"
-      register: ripgrep_download
-    - set_fact:
-        rg_dir: "{{ download_dir }}/{{ (((ripgrep_download.dest|basename|splitext)[0])|splitext)[0] }}"
-    - command: tar -xzf {{ ripgrep_download.dest|quote }}
-      args:
-        chdir: "{{ download_dir }}"
-    - copy:
-        src: "{{ rg_dir }}/rg"
-        dest: "{{ local_bin_dir }}/rg"
-        mode: a+x
-    - file:
-        path: "{{ ansible_env.HOME }}/.local/share/man/man1"
-        state: directory
-    - copy:
-        src: "{{ rg_dir }}/rg.1"
-        dest: "{{ ansible_env.HOME }}/.local/share/man/man1/rg.1"
-    - file:
-        path: "{{ ansible_env.HOME }}/.common/zsh"
-        state: directory
-    - copy:
-        src: "{{ rg_dir }}/complete/_rg"
-        dest: "{{ ansible_env.HOME }}/.common/zsh/_rg"
-    - copy:
-        src: "{{ rg_dir }}/complete/rg.bash-completion"
-        dest: "/etc/bash_completion.d/rg.bash-completion"
-      become: yes
