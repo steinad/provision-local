@@ -27,7 +27,7 @@
 
     # icon and theme collections
     - 'ppa:noobslab/icons'
-    - 'ppa:noobslab/themes'
+    #- 'ppa:noobslab/themes'
 
     # VLC daily
     - 'ppa:videolan/master-daily'
@@ -70,7 +70,7 @@
     state: latest
     update_cache: yes
   with_items:
-    - openjdk-9-jdk-headless
+    - openjdk-11-jdk-headless
     - python2.7
     - python-pip
     - python3-pip
@@ -86,7 +86,8 @@
     - ppa-purge
     - chromium-browser
     - gnome-tweak-tool
-    - numix-icon-theme-circle
+    - numix-icon-theme
+    #- numix-icon-theme-circle
     - numix-gtk-theme
     - indicator-multiload
     - ffmpeg
@@ -146,8 +147,9 @@
     - command: fc-cache -f -v
 
 - import_tasks: system.yml
+  when: desktop
 - import_tasks: desktop.yml
-  when: system_type == 'desktop'
+  when: desktop
   tags: desktop
 - import_tasks: zsh.yml
   tags: zsh

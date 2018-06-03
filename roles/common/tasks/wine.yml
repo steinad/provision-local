@@ -1,6 +1,6 @@
 - name: add wine apt-key
   apt_key:
-    url: https://repos.wine-staging.com/wine/Release.key
+    url: https://dl.winehq.org/wine-builds/Release.key
     state: present
   become: yes
 
@@ -12,7 +12,7 @@
 
 - name: install wine
   apt:
-    name: 'winehq-staging'
+    name: 'winehq-devel'
     install_recommends: yes
     state: latest
     update_cache: yes

@@ -7,7 +7,7 @@
     download_dir: "{{ ansible_env.HOME }}/Downloads"
     local_bin_dir: "{{ ansible_env.HOME }}/.local/bin"
     apps_dir: "{{ ansible_env.HOME }}/Applications"
-    system_type: 'desktop'
+    desktop: false
     ubuntu_version: '18.04'
     versions:
       zsh: '5.4.2'
