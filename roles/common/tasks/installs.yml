@@ -1,20 +1,21 @@
-- name: install spotify
-  block:
-    - apt_key:
-        keyserver: 'hkp://keyserver.ubuntu.com:80'
-        id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-        state: present
-
-    - apt_repository:
-        repo: 'deb http://repository.spotify.com stable non-free'
-        filename: spotify
-        state: present
-
-    - apt:
-        name: spotify-client
-        update_cache: yes
-        state: present
-  become: yes
+# TODO: snap install spotify
+#- name: install spotify
+#  block:
+#    - apt_key:
+#        keyserver: 'hkp://keyserver.ubuntu.com:80'
+#        id: 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+#        state: present
+#
+#    - apt_repository:
+#        repo: 'deb http://repository.spotify.com stable non-free'
+#        filename: spotify
+#        state: present
+#
+#    - apt:
+#        name: spotify-client
+#        update_cache: yes
+#        state: present
+#  become: yes
 
 - name: install lutris
   block:
@@ -47,7 +48,7 @@
     # Google Chrome (Stable)
     - 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
     # Vivaldi
-    - 'https://downloads.vivaldi.com/snapshot/vivaldi-{{ versions.vivaldi }}-1_amd64.deb'
+    - 'https://downloads.vivaldi.com/snapshot/vivaldi-{{ versions.vivaldi }}-2_amd64.deb'
     # Spideroak One
     - 'https://spideroak.com/release/spideroak/deb_x64'
     # Google Play Music manager - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb'

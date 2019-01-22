@@ -47,6 +47,8 @@
     - { name: 'neovim', pip: 'pip3' }
     - { name: 'neovim', pip: 'pip2' }
     - { name: 'vim-vint', pip: 'pip3' }
+    - { name: 'pynvim', pip: 'pip2' }
+    - { name: 'pynvim', pip: 'pip3' }
 
 - name: install vim-plug
   block:

@@ -26,13 +26,14 @@
     - libfdk-aac-dev
     - libmp3lame-dev
     - libopus-dev
+    - libgnutls28-dev
   become: yes
 
 - name: get ffmpeg repository
   git:
     repo: https://git.ffmpeg.org/ffmpeg.git
     dest: "{{ apps_dir }}/ffmpeg"
-    version: 'release/4.0'
+    version: 'release/4.1'
 
 - name: ffmpeg configure
   shell: "./configure --prefix=$HOME/.local \
@@ -47,6 +48,7 @@
     --enable-libvpx \
     --enable-libx264 \
     --enable-libx265 \
+    --enable-gnutls \
     --enable-nonfree"
   args:
     chdir: "{{ apps_dir }}/ffmpeg"
