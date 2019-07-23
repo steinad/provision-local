@@ -6,13 +6,13 @@
 
 - name: add wine repository
   apt_repository:
-    repo: 'deb https://dl.winehq.org/wine-builds/ubuntu/ artful main'
+    repo: 'deb https://dl.winehq.org/wine-builds/ubuntu/ {{ ansible_facts.distribution_release }} main'
     state: present
   become: yes
 
 - name: install wine
   apt:
-    name: 'winehq-devel'
+    name: 'winehq-staging'
     install_recommends: yes
     state: latest
     update_cache: yes

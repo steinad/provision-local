@@ -8,13 +8,14 @@
     local_bin_dir: "{{ ansible_env.HOME }}/.local/bin"
     apps_dir: "{{ ansible_env.HOME }}/Applications"
     desktop: true
-    ubuntu_version: '18.04'
     versions:
-      zsh: '5.6.2'
-      tmux: '2.8'
-      vivaldi: 'snapshot_2.1.1328.4'
-      ripgrep: '0.10.0'
+      zsh: '5.7.1'
+      tmux: '3.0'
+      vivaldi: 'snapshot_2.7.1609.4-1'
+      ripgrep: '11.0.1'
 
-  tasks:
-    - debug:
-        msg: "{{ ansible_env }}"
+  # tasks:
+  #   - debug:
+  #       msg: "{{ ansible_env }}"
+  #   - debug:
+  #       msg: "{{ ansible_facts }}"

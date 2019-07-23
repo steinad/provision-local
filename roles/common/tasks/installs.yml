@@ -20,11 +20,11 @@
 - name: install lutris
   block:
     - apt_key:
-        url: "http://download.opensuse.org/repositories/home:/strycore/xUbuntu_{{ ubuntu_version }}/Release.key"
+        url: "http://download.opensuse.org/repositories/home:/strycore/xUbuntu_{{ ansible_facts.distribution_version }}/Release.key"
         state: present
 
     - apt_repository:
-        repo: 'deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_{{ ubuntu_version }}/ ./'
+        repo: 'deb http://download.opensuse.org/repositories/home:/strycore/xUbuntu_{{ ansible_facts.distribution_version }}/ ./'
         filename: lutris
         state: present
 
@@ -48,10 +48,12 @@
     # Google Chrome (Stable)
     - 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
     # Vivaldi
-    - 'https://downloads.vivaldi.com/snapshot/vivaldi-{{ versions.vivaldi }}-2_amd64.deb'
+    - 'https://downloads.vivaldi.com/snapshot/vivaldi-{{ versions.vivaldi }}_amd64.deb'
     # Spideroak One
     - 'https://spideroak.com/release/spideroak/deb_x64'
     # Google Play Music manager - 'https://dl.google.com/linux/direct/google-musicmanager-beta_current_amd64.deb'
+    # keybase
+    - 'https://prerelease.keybase.io/keybase_amd64.deb'
   become: yes
   ignore_errors: yes
 
@@ -62,7 +64,7 @@
         state: present
 
     - apt_repository:
-        repo: 'deb [arch=amd64] https://updates.signal.org/desktop/apt artful main'
+        repo: 'deb [arch=amd64] https://updates.signal.org/desktop/apt {{ ansible_facts.distribution_release }} main'
         filename: 'signal-artful'
         state: present
 

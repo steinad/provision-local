@@ -138,7 +138,7 @@
 - name: install patched Hack font
   block:
     - get_url:
-        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v1.2.0/Hack.zip
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
         dest: "{{ download_dir }}/Hack.zip"
     - file:
         path: "{{ ansible_env.HOME }}/.fonts"
