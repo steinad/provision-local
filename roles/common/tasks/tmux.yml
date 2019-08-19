@@ -16,6 +16,7 @@
     - libevent-dev
     - libncurses5
     - libncurses5-dev
+    - bison
   become: yes
 
 - block:

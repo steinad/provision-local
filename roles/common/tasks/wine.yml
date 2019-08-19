@@ -1,6 +1,18 @@
+- name: install amd64 libfaudio0 (wine-devel dependency)
+  apt:
+    deb: https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_{{ ansible_facts.distribution_version }}/amd64/libfaudio0_19.08-0~{{ ansible_facts.distribution_release }}_amd64.deb
+    state: present
+  become: yes
+
+- name: install i386 libfaudio0 (wine-devel dependency)
+  apt:
+    deb: https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_{{ ansible_facts.distribution_version }}/i386/libfaudio0_19.08-0~{{ ansible_facts.distribution_release }}_i386.deb
+    state: present
+  become: yes
+
 - name: add wine apt-key
   apt_key:
-    url: https://dl.winehq.org/wine-builds/Release.key
+    url: https://dl.winehq.org/wine-builds/winehq.key
     state: present
   become: yes
 

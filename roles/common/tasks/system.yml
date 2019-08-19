@@ -20,7 +20,14 @@
         fstype: ntfs-3g
         opts: default
         state: mounted
+
+    - mount:
+        path: /media/ssd01
+        src: LABEL=SSD01
+        fstype: ext4
+        state: mounted
   become: yes
+  tags: mounts
 
 - name: Symlink home dirs
   block:

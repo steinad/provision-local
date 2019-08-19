@@ -7,12 +7,11 @@
     download_dir: "{{ ansible_env.HOME }}/Downloads"
     local_bin_dir: "{{ ansible_env.HOME }}/.local/bin"
     apps_dir: "{{ ansible_env.HOME }}/Applications"
-    desktop: true
     versions:
       zsh: '5.7.1'
       tmux: '3.0'
-      vivaldi: 'snapshot_2.7.1609.4-1'
-      ripgrep: '11.0.1'
+      vivaldi: 'snapshot_2.7.1628.12-1'
+      ripgrep: '11.0.2'
 
   # tasks:
   #   - debug:

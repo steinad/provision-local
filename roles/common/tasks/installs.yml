@@ -57,23 +57,6 @@
   become: yes
   ignore_errors: yes
 
-- name: install Signal Desktop
-  block:
-    - apt_key:
-        url: https://updates.signal.org/desktop/apt/keys.asc
-        state: present
-
-    - apt_repository:
-        repo: 'deb [arch=amd64] https://updates.signal.org/desktop/apt {{ ansible_facts.distribution_release }} main'
-        filename: 'signal-artful'
-        state: present
-
-    - apt:
-        name: signal-desktop
-        update_cache: yes
-        state: present
-  become: yes
-
 - name: download Steam deb
   get_url:
     url: https://steamcdn-a.akamaihd.net/client/installer/steam.deb

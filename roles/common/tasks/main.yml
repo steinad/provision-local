@@ -20,13 +20,13 @@
     state: present
   with_items:
     # latest gnome3
-    - 'ppa:gnome3-team/gnome3-staging'
+    # - 'ppa:gnome3-team/gnome3-staging'
 
     # latest libreoffice
     - 'ppa:libreoffice/ppa'
 
     # icon and theme collections
-    - 'ppa:noobslab/icons'
+    # - 'ppa:noobslab/icons'
     #- 'ppa:noobslab/themes'
 
     # VLC daily
@@ -87,7 +87,7 @@
     - chromium-browser
     - gnome-tweak-tool
     - numix-icon-theme
-    #- numix-icon-theme-circle
+    - numix-icon-theme-circle
     - numix-gtk-theme
     - indicator-multiload
     - ffmpeg
@@ -147,22 +147,37 @@
     - command: fc-cache -f -v
 
 - import_tasks: system.yml
-  when: desktop
+  tags:
+    - system
+    - desktop
 - import_tasks: desktop.yml
-  when: desktop
-  tags: desktop
+  tags:
+    - desktop
 - import_tasks: zsh.yml
   tags: zsh
 - import_tasks: tmux.yml
   tags: tmux
 - import_tasks: neovim.yml
-- import_tasks: wine.yml
-- import_tasks: installs.yml
-  tags: installs
 - import_tasks: dotfiles.yml
   tags: dotfiles
+- import_tasks: wine.yml
+  tags: wine
+- import_tasks: installs.yml
+  tags:
+    - installs
+    - desktop
 - import_tasks: beets.yml
+  tags:
+    - desktop
 - import_tasks: rust.yml
-  tags: rust
+  tags:
+    - rust
+    - desktop
 - import_tasks: ffmpeg.yml
-  tags: ffmpeg
+  tags:
+    - ffmpeg
+    - desktop
+- import_tasks: virtualbox.yml
+  tags:
+    - vbox
+    - desktop
