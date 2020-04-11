@@ -42,11 +42,13 @@
   pip:
     name: "{{ item.name }}"
     executable: "{{ item.pip }}"
+    extra_args: --user
   with_items:
     - { name: 'neovim', pip: 'pip3' }
     - { name: 'neovim', pip: 'pip2' }
     - { name: 'vim-vint', pip: 'pip3' }
-  become: yes
+    - { name: 'pynvim', pip: 'pip2' }
+    - { name: 'pynvim', pip: 'pip3' }
 
 - name: install vim-plug
   block:

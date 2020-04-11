@@ -22,7 +22,7 @@
     args:
       chdir: "{{ apps_dir }}/zsh"
     register: zsh_preconf
-  
+
   - debug:
       msg: "{{ zsh_preconf }}"
 

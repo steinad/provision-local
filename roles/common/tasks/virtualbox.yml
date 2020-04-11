@@ -1,0 +1,22 @@
+- name: Add VirtualBox public key
+  apt_key:
+    url: "https://www.virtualbox.org/download/oracle_vbox_2016.asc"
+    state: present
+  become: true
+
+- name: Add VirtualBox repository
+  apt_repository:
+    repo: deb https://download.virtualbox.org/virtualbox/debian {{ ansible_facts.distribution_release }} contrib
+    state: present
+  become: true
+
+- name: Install VirtualBox
+  apt:
+    name:
+      - virtualbox-6.*
+      - virtualbox-guest-dkms
+      - virtualbox-guest-utils
+      - virtualbox-guest-x11
+    state: present
+    update_cache: true
+  become: true

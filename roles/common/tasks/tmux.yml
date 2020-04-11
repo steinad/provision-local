@@ -4,6 +4,10 @@
   ignore_errors: yes
   check_mode: no
 
+- name: install tmux-256color terminfo
+  command: "tic -x {{ role_path }}/files/tmux-256color.ti"
+
+
 - name: install tmux dependencies
   apt:
     name: "{{ item }}"
@@ -12,6 +16,7 @@
     - libevent-dev
     - libncurses5
     - libncurses5-dev
+    - bison
   become: yes
 
 - block:

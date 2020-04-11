@@ -1,0 +1,66 @@
+- name: ffmpeg prerequisites
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - libass-dev
+    - libfreetype6-dev
+    - libsdl2-dev
+    - libtheora-dev
+    - libtool
+    - libva-dev
+    - libvdpau-dev
+    - libvorbis-dev
+    - libxcb1-dev
+    - libxcb-shm0-dev
+    - libxcb-xfixes0-dev
+    - mercurial
+    - texinfo
+    - zlib1g-dev
+    - nasm
+    - yasm
+    - libx264-dev
+    - libx265-dev
+    - libvpx-dev
+    - libfdk-aac-dev
+    - libmp3lame-dev
+    - libopus-dev
+    - libgnutls28-dev
+  become: yes
+
+- name: get ffmpeg repository
+  git:
+    repo: https://git.ffmpeg.org/ffmpeg.git
+    dest: "{{ apps_dir }}/ffmpeg"
+    version: 'release/4.1'
+
+- name: ffmpeg configure
+  shell: "./configure --prefix=$HOME/.local \
+    --enable-gpl \
+    --enable-libass \
+    --enable-libfdk-aac \
+    --enable-libfreetype \
+    --enable-libmp3lame \
+    --enable-libopus \
+    --enable-libtheora \
+    --enable-libvorbis \
+    --enable-libvpx \
+    --enable-libx264 \
+    --enable-libx265 \
+    --enable-gnutls \
+    --enable-nonfree"
+  args:
+    chdir: "{{ apps_dir }}/ffmpeg"
+
+- name: ffmpeg make
+  make:
+    chdir: "{{ apps_dir }}/ffmpeg"
+    params:
+      NUM_THREADS: 4
+
+- name: ffmpeg make install
+  make:
+    chdir: "{{ apps_dir }}/ffmpeg"
+    target: install
+  become: yes

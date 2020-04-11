@@ -11,12 +11,15 @@
     ubuntu_version: '18.04'
     docker_compose_path: "/usr/local/bin/"
     versions:
-      zsh: '5.4.2'
-      tmux: '2.6'
+      zsh: '5.7.1'
+      tmux: '3.0'
       vivaldi: 'snapshot_1.16.1177.5'
-      ripgrep: '0.8.1'
+      vivaldi: 'snapshot_2.7.1628.12-1'
+      ripgrep: '11.0.2'
       docker_compose: 1.25.4
 
-  tasks:
-    - debug:
-        msg: "{{ ansible_env }}"
+  # tasks:
+  #   - debug:
+  #       msg: "{{ ansible_env }}"
+  #   - debug:
+  #       msg: "{{ ansible_facts }}"
