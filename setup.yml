@@ -9,11 +9,13 @@
     apps_dir: "{{ ansible_env.HOME }}/Applications"
     system_type: 'desktop'
     ubuntu_version: '18.04'
+    docker_compose_path: "/usr/local/bin/"
     versions:
       zsh: '5.4.2'
       tmux: '2.6'
       vivaldi: 'snapshot_1.16.1177.5'
       ripgrep: '0.8.1'
+      docker_compose: 1.25.4
 
   tasks:
     - debug:

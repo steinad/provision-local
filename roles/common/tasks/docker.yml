@@ -1,0 +1,39 @@
+- name: install prerequisites
+  apt:
+    state: present
+    pkg:
+      - "apt-transport-https"
+      - "ca-certificates"
+      - "curl"
+      - "gnupg-agent"
+      - "software-properties-common"
+  become: yes
+
+- name: Docker GPG
+  apt_key:
+    url: "https://download.docker.com/linux/ubuntu/gpg"
+    state: present
+  become: yes
+
+- name: Docker repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+    state: present
+  become: yes
+
+- name: install Docker
+  apt:
+    state: present
+    update_cache: yes
+    pkg:
+      - "docker-ce"
+      - "docker-ce-cli"
+      - "containerd.io"
+  become: yes
+
+- name: Install Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ versions.docker_compose }}/docker-compose-Linux-x86_64"
+    dest: "{{ docker_compose_path }}"
+    mode: 0755
+  become: yes
