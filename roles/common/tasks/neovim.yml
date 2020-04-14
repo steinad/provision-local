@@ -9,14 +9,15 @@
 
 - name: install neovim prerequisites
   apt:
-    name: "{{ item }}"
+    name:
+      - 'python-dev'
+      - 'python3-pip'
+      - 'python-pip'
+      - 'python2.7'
+      - 'xsel'
+      - 'xclip'
     state: latest
     update_cache: yes
-  with_items:
-    - 'python-dev'
-    - 'python3-pip'
-    - 'python-pip'
-    - 'python2.7'
   become: yes
 
 - name: install neovim
